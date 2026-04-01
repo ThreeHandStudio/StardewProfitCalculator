@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Stardew Valley Crop Profit Calculator</title>
+        <!-- <link rel="stylesheet" href="style.css"> -->
+        <script src="cropinfo.js"></script>
+
+        <style>
+            @font-face {
+                font-family: 'Stardew Bold';
+                src: url('fonts/svbold.ttf');
+            }
+
+            h1, th, td, label, select{
+                font-family: 'Stardew Bold', sans-serif;
+            }
+        </style>
+    </head>
+
+    <body onload="initializer()">
+        <h1>Stardew Valley Crop Profit Calculator</h1>
+
+        <table>
+            <tr>
+                <td>    
+                    <label for="seasonSelect">Season:</label>
+                    <select id="seasonSelect">
+                    </select>
+                </td>
+
+                <td style="width:48px;"></td>
+
+                <td>
+                    <label for="cropSelect">Crop:</label>
+                    <select id="cropSelect">
+                    </select>
+                </td>
+            </tr>
+        </table>
+
+        <br>
+
+        <table id="seedInfoTable">
+            <tr>
+                <th>Seed Cost</th>
+                <td id="pierreIcon" style="width:48px;height:48px"><img src="images/Pierre_Icon.png" alt="Pierre"></td>
+                <td id="jojaIcon" style="width:48px;height:48px"><img src="images/Morris_Icon.png" alt="Joja"></td>
+                <td id="sandyIcon" style="width:48px;height:48px"><img src="images/Sandy_Icon.png" alt="Sandy"></td>
+            </tr>
+            <tr>
+                <td id="seedImage"></td>
+                <td id="pierreCost"></td>
+                <td id="jojaCost"></td>
+                <td id="sandyCost"></td>
+            </tr>
+        </table>    
+
+        <table id="sellPriceTable">
+            <tr>
+                <th>Sell Prices</th>
+            </tr>
+            <tr>
+                <th>Quality</th>
+                <th id="normal"></th>
+                <th id="silver" style="width:48px;height:48px"><img src="images/Quality_Icon_Silver.png" alt="Silver"></th>
+                <th id="gold" style="width:48px;height:48px"><img src="images/Quality_Icon_Gold.png" alt="Gold"></th>
+                <th id="iridium" style="width:48px;height:48px"><img src="images/Quality_Icon_Iridium.png" alt="Iridium"></th>
+            </tr>
+            <tr>
+                <td style="height:48px"><img src="images/Gold_Coin.png" style="width:24px;height:24px" alt="Normal"></td>
+                <td id = "normalPrice"></td>
+                <td id="silverPrice"></td>
+                <td id="goldPrice"></td>
+                <td id="iridiumPrice"></td>
+            </tr>
+            <tr>
+                <td id="tiller" style="height:48px"><img src="images/Talent_Tiller.png" alt="Tiller"></td>
+                <td id="tillerNormal"></td>
+                <td id="tillerSilver"></td>
+                <td id="tillerGold"></td>
+                <td id="tillerIridium"></td>
+            </tr>
+        </table>
+    </body>
+</html>
