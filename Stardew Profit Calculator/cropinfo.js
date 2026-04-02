@@ -18,20 +18,45 @@ const rice = ["Rice", "Vegetable", 30, 8, 0, 7, 6, 5, 6, 5, 4, 40, 0, 0];
 
 const blueberry = ["Blueberry", "Fruit", 50, 13, 4, 11, 9, 8, 10, 8, 7, 80, 0, 0];
 const hops = ["Hops", "Vegetable", 25, 11, 1, 9, 8, 7, 8, 6, 6, 60, 75, 0];
+const hotPepper = ["Hot Pepper", "Vegetable", 40, 5, 3, 4, 3, 3, 3, 3, 2, 40, 50, 0];
+const melon = ["Melon", "Fruit", 250, 12, 0, 10, 9, 8, 9, 7, 6, 80, 100, 0];
+const pineapple = ["Pineapple", "Fruit", 300, 14, 7, 12, 10, 9, 11, 9, 7, 0, 0, 0];
+const poppy = ["Poppy", "Flower", 140, 7, 0, 6, 5, 4, 5, 4, 3, 100, 125, 0];
+const radish = ["Radish", "Vegetable", 90, 6, 0, 5, 4, 4, 4, 3, 3, 40, 50, 0];
+const redCabbage = ["Red Cabbage", "Vegetable", 260, 9, 0, 8, 6, 6, 7, 5, 5, 100, 0, 0];
+const starfruit = ["Starfruit", "Fruit", 750, 13, 0, 11, 9, 8, 10, 8, 7, 0, 0, 400];
+const summerSpangle = ["Summer Spangle", "Flower", 90, 8, 0, 7, 6, 5, 6, 5, 4, 50, 62, 0];
+const summerSquash = ["Summer Squash", "Vegetable", 45, 6, 3, 5, 4, 4, 4, 3, 3, 0, 0, 0];
+const taroRoot = ["Taro Root", "Vegetable", 100, 10, 0, 9, 7, 6, 8, 6, 5, 0, 0, 0];
+const tomato = ["Tomato", "Vegetable", 60, 11, 4, 9, 8, 7, 8, 7, 6, 50, 62, 0];
 
 const amaranth = ["Amaranth", "Vegetable", 150, 7, 0, 6, 5, 4, 5, 4, 3, 70, 87, 0];
+const artichoke = ["Artichoke", "Vegetable", 160, 8, 0, 7, 6, 5, 6, 5, 4, 3, 0, 0];
+const beet = ["Beet", "Vegetable", 100, 6, 0, 5, 4, 4, 4, 3, 3, 0, 0, 20];
+const bokChoy = ["Bok Choy", "Vegetable", 80, 4, 0, 3, 3, 2, 3, 2, 2, 50, 62, 0];
+const broccoli = ["Broccoli", "Vegetable", 7, 8, 4, 7, 6, 5, 6, 5, 4, 0, 0, 0];
+const cranberries = ["Cranberries", "Fruit", 75, 7, 5, 6, 5, 4, 5, 4, 3, 240, 300, 0];
+const eggplant = ["Eggplant", "Vegetable", 60, 5, 5, 4, 3, 3, 3, 3, 2, 20, 25, 0];
+const fairyRose = ["Fairy Rose", "Flower", 290, 12, 0, 10, 9, 8, 9, 7, 6, 200, 250, 0];
+const grape = ["Grape", "Fruit", 80, 10, 3, 8, 7, 6, 7, 6, 6, 60, 75, 0];
+const pumpkin = ["Pumpkin", "Vegetable", 320, 13, 0, 11, 9, 8, 10, 8, 6, 100, 125, 0];
+const sweetGemBerry = ["Sweet Gem Berry", "Fruit", 3000, 24, 0, 22, 18, 15, 22, 18, 15, 0, 0, -1];
+const yam = ["Yam", "Vegetable", 160, 10, 0, 9, 7, 6, 7, 6, 5, 60, 75, 0];
 
 const powdermelon = ["Powdermelon", "Fruit", 60, 7, 0, 6, 5, 4, 5, 4, 3, 0, 0, 0];
 
 const ancientFruit = ["Ancient Fruit", "Fruit", 550, 28, 7, 25, 21, 18, 22, 18, 15, 0, 0, 0];
+const cactusFruit = ["Cactus Fruit", "Fruit", 75, 12, 3, 10, 9, 8, 9, 7, 6, 0, 0, 150];
 const coffee = ["Coffee Bean", "Fruit", 15, 10, 2, 8, 7, 6, 7, 6, 5, 0, 0, 0];
 const corn = ["Corn", "Vegetable", 50, 14, 4, 12, 10, 9, 11, 9, 7, 150, 187, 0];
+const sunflower = ["Sunflower", "Flower", 80, 8, 0, 7, 6, 5, 6, 5, 4, 200, 125, 0];
+const wheat = ["Wheat", "Vegetable", 25, 4, 0, 3, 3, 2, 3, 2, 2, 10, 12, 0];
 
 let springCrops = [blueJazz, carrot, cauliflower, garlic, greenBean, kale, parsnip, potato, rhubarb, strawberry, tulip, rice];
-let summerCrops = [blueberry, hops];
-let fallCrops = [amaranth];
+let summerCrops = [blueberry, hops, hotPepper, melon, pineapple, poppy, radish, redCabbage, starfruit, summerSpangle, summerSquash, taroRoot, tomato];
+let fallCrops = [amaranth, artichoke, beet, bokChoy, broccoli, cranberries, eggplant, fairyRose, grape, pumpkin, sweetGemBerry, yam];
 let winterCrops = [powdermelon];
-let specialCrops = [ancientFruit, coffee, corn];
+let specialCrops = [ancientFruit, cactusFruit, coffee, corn, sunflower, wheat];
 
 function initializer() {
     
@@ -132,6 +157,24 @@ function cropSelectChanged() {
         cropName = "Ancient";
     } else if (cropName === "Coffee Bean") {
         cropName = "Coffee";
+    } else if (cropName === "Hot Pepper") {
+        cropName = "Pepper";
+    } else if (cropName === "Red Cabbage") {
+        cropName = "Cabbage";
+    } else if (cropName === "Summer Spangle") {
+        cropName = "Spangle";
+    } else if (cropName === "Summer Squash") {
+        cropName = "Squash";
+    } else if (cropName === "Bok Choy") {
+        cropName = "BokChoy";
+    } else if (cropName === "Fairy Rose") {
+        cropName = "FairyRose";
+    } else if (cropName === "Cactus Fruit") {
+        cropName = "Cactus";
+    } else if (cropName === "Taro Root") {
+        cropName = "Taro";
+    } else if (cropName === "Sweet Gem Berry") {
+        cropName = "SweetGem";
     }
 
     element = document.getElementById("seedImage");
@@ -155,8 +198,13 @@ function cropSelectChanged() {
     element = document.getElementById("sandyCost");
     if (sandyCost === 0) {
         element.textContent = "Not Sold";
+        document.getElementById("sandyIcon").innerHTML = '<img src="images/Sandy_Icon.png" alt="Sandy Cost">';
+    } else if (sandyCost === -1) {
+        element.textContent = "600 - 1000g";
+        document.getElementById("sandyIcon").innerHTML = '<img src="images/Cart_Icon.png" alt="Sandy Cost">';
     } else {
         element.textContent = sandyCost + "g";
+        document.getElementById("sandyIcon").innerHTML = '<img src="images/Sandy_Icon.png" alt="Sandy Cost">';
     }
 
     element = document.getElementById("normal");
