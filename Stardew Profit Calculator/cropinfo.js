@@ -31,7 +31,7 @@ const taroRoot = ["Taro Root", "Vegetable", 100, 10, 0, 9, 7, 6, 8, 6, 5, 0, 0, 
 const tomato = ["Tomato", "Vegetable", 60, 11, 4, 9, 8, 7, 8, 7, 6, 50, 62, 0];
 
 const amaranth = ["Amaranth", "Vegetable", 150, 7, 0, 6, 5, 4, 5, 4, 3, 70, 87, 0];
-const artichoke = ["Artichoke", "Vegetable", 160, 8, 0, 7, 6, 5, 6, 5, 4, 3, 0, 0];
+const artichoke = ["Artichoke", "Vegetable", 160, 8, 0, 7, 6, 5, 6, 5, 4, 30, 0, 0];
 const beet = ["Beet", "Vegetable", 100, 6, 0, 5, 4, 4, 4, 3, 3, 0, 0, 20];
 const bokChoy = ["Bok Choy", "Vegetable", 80, 4, 0, 3, 3, 2, 3, 2, 2, 50, 62, 0];
 const broccoli = ["Broccoli", "Vegetable", 7, 8, 4, 7, 6, 5, 6, 5, 4, 0, 0, 0];
@@ -58,6 +58,71 @@ let fallCrops = [amaranth, artichoke, beet, bokChoy, broccoli, cranberries, eggp
 let winterCrops = [powdermelon];
 let specialCrops = [ancientFruit, cactusFruit, coffee, corn, sunflower, wheat];
 
+// These arrays hold the crop quality percentages for each fertilizer type. The first is normal quality, second silver, third gold, and fourth iridium. The values are in the format: [normal, silver, gold, iridium]
+const noFertilizer = [[0.97, 0.02, 0.01, 0],
+                      [0.91, 0.06, 0.03, 0],
+                      [0.85, 0.1, 0.05, 0],   
+                      [0.8, 0.13, 0.07, 0],
+                      [0.75, 0.16, 0.09, 0],
+                      [0.69, 0.2, 0.11, 0],
+                      [0.64, 0.23, 0.13, 0],
+                      [0.6, 0.25, 0.15, 0],
+                      [0.55, 0.28, 0.17, 0],
+                      [0.5, 0.31, 0.19, 0],
+                      [0.46, 0.33, 0.21, 0],
+                      [0.42, 0.35, 0.23, 0],
+                      [0.38, 0.37, 0.25, 0],
+                      [0.34, 0.39, 0.27, 0],
+                      [0.3, 0.41, 0.29, 0]];
+
+const basicFertilizer = [[0.88, 0.08, 0.04, 0],
+                         [0.77, 0.15, 0.08, 0],
+                         [0.68, 0.20, 0.12, 0],
+                         [0.59, 0.26, 0.15, 0],
+                         [0.50, 0.31, 0.19, 0],
+                         [0.42, 0.35, 0.23, 0],
+                         [0.35, 0.39, 0.26, 0],
+                         [0.28, 0.42, 0.30, 0],
+                         [0.22, 0.44, 0.34, 0],
+                         [0.16, 0.47, 0.37, 0],
+                         [0.15, 0.44, 0.41, 0],
+                         [0.14, 0.41, 0.45, 0],
+                         [0.13, 0.39, 0.48, 0],
+                         [0.12, 0.36, 0.52, 0],
+                         [0.11, 0.33, 0.56, 0]];
+
+const qualityFertilizer = [[0.78, 0.14, 0.08, 0],
+                           [0.64, 0.23, 0.13, 0],
+                           [0.52, 0.30, 0.18, 0],
+                           [0.40, 0.36, 0.24, 0],
+                           [0.30, 0.41, 0.29, 0],
+                           [0.21, 0.45, 0.34, 0],
+                           [0.15, 0.45, 0.40, 0],
+                           [0.14, 0.41, 0.45, 0],
+                           [0.13, 0.37, 0.50, 0],
+                           [0.11, 0.33, 0.56, 0],
+                           [0.1, 0.29, 0.61, 0],
+                           [0.09, 0.25, 0.66, 0],
+                           [0.07, 0.21, 0.72, 0],
+                           [0.06, 0.17, 0.77, 0],
+                           [0.04, 0.13, 0.82, 0]];
+
+const deluxeFertilizer = [[0, 0.84, 0.1, 0.06],
+                          [0, 0.75, 0.16, 0.09],
+                          [0, 0.66, 0.22, 0.13],
+                          [0, 0.57, 0.27, 0.16],
+                          [0, 0.49, 0.31, 0.2],
+                          [0, 0.42, 0.35, 0.23],
+                          [0, 0.35, 0.39, 0.27],
+                          [0, 0.28, 0.42, 0.30],
+                          [0, 0.22, 0.45, 0.34],
+                          [0, 0.16, 0.47, 0.37],
+                          [0, 0.11, 0.48, 0.41],
+                          [0, 0.07, 0.49, 0.44],
+                          [0, 0.03, 0.5, 0.47],
+                          [0, 0, 0.49, 0.51],
+                          [0, 0, 0.46, 0.55]];
+
 function initializer() {
     
 
@@ -78,6 +143,11 @@ function initializer() {
     let cropSelect = document.getElementById("cropSelect");
     cropSelect.addEventListener("change", function() {
         cropSelectChanged();
+    });
+
+    let farmingLevel = document.getElementById("farmingLevel");
+    farmingLevel.addEventListener("change", function() {
+        farmingLevelChanged();
     });
 }
 
@@ -233,4 +303,187 @@ function cropSelectChanged() {
 
     element = document.getElementById("tillerIridium");
     element.textContent = Math.floor(baseValue * 1.1 * 2) + "g";
+
+    artisanPriceUpdate();
+}
+
+function artisanPriceUpdate() {
+    let selectedSeason = document.getElementById("seasonSelect").value;
+    let croplist = [];
+    let element;
+
+    if (selectedSeason === "spring") {
+        croplist = springCrops;
+    } else if (selectedSeason === "summer") {
+        croplist = summerCrops;
+    } else if (selectedSeason === "fall") {
+        croplist = fallCrops;
+    } else if (selectedSeason === "winter") {
+        croplist = winterCrops;
+    } else if (selectedSeason === "special") {
+        croplist = specialCrops;
+    }
+
+    let selectedCropName = document.getElementById("cropSelect").value;
+    let selectedCrop = null;
+
+    for (var i = 0; i < croplist.length; i++) {
+        if (croplist[i][0] === selectedCropName) {
+            selectedCrop = croplist[i];
+            break;
+        }
+    }
+
+    let crop = selectedCrop[0];
+    let cropType = selectedCrop[1];
+    let baseValue = selectedCrop[2];
+
+    if (crop === "Wheat") {
+
+        element = document.getElementById("kegNormalPrice");
+        document.getElementById("kegNormal").innerHTML = `<img src="images/Icon_Beer.png" alt="keg" style="width:48px;">`;
+        element.textContent = Math.floor(200) + "g";
+
+        element = document.getElementById("kegArtisanPrice");
+        element.textContent = Math.floor(200 * 1.4) + "g";
+
+        element = document.getElementById("beeNormalPrice");
+        element.textContent = "N/A";
+
+        element = document.getElementById("jarNormalPrice");
+        document.getElementById("jarNormal").innerHTML = `<img src="images/Icon_Pickles.png" alt="Jar" style="width:48px;">`;
+        element.textContent = Math.floor(50 + baseValue * 1.5) + "g";
+
+        element = document.getElementById("jarArtisanPrice");
+        element.textContent = Math.floor((50 + baseValue * 1.5) * 1.4) + "g";
+
+        element = document.getElementById("beeArtisanPrice");
+        element.textContent = "N/A";
+
+    } else if (crop === "Rice") {
+        element = document.getElementById("kegNormalPrice");
+        document.getElementById("kegNormal").innerHTML = `<img src="images/Icon_Vinegar.png" alt="keg" style="width:48px;">`;
+        element.textContent = Math.floor(100) + "g";
+
+        element = document.getElementById("kegArtisanPrice");
+        element.textContent = Math.floor(100) + "g";
+
+        element = document.getElementById("beeNormalPrice");
+        element.textContent = "N/A";
+
+        element = document.getElementById("jarNormalPrice");
+        element.textContent = "N/A";
+
+        element = document.getElementById("jarArtisanPrice");
+        element.textContent = "N/A";
+
+        element = document.getElementById("beeArtisanPrice");
+        element.textContent = "N/A";
+
+    } else if (crop === "Coffee Bean") {
+        element = document.getElementById("kegNormalPrice");
+        document.getElementById("kegNormal").innerHTML = `<img src="images/Icon_Coffee.png" alt="keg" style="width:48px;">`;
+        element.textContent = Math.floor(150) + "g";
+
+        element = document.getElementById("kegArtisanPrice");
+        element.textContent = Math.floor(150) + "g";
+
+        element = document.getElementById("beeNormalPrice");
+        element.textContent = "N/A";
+
+        element = document.getElementById("jarNormalPrice");
+        element.textContent = "N/A";
+
+        element = document.getElementById("jarArtisanPrice");
+        element.textContent = "N/A";
+
+        element = document.getElementById("beeArtisanPrice");
+        element.textContent = "N/A";
+    } else if (crop === "Hops") {
+        element = document.getElementById("kegNormalPrice");
+        document.getElementById("kegNormal").innerHTML = `<img src="images/Icon_Pale_Ale.png" alt="keg" style="width:48px;">`;
+        element.textContent = Math.floor(300) + "g";
+
+        element = document.getElementById("kegArtisanPrice");
+        element.textContent = Math.floor(300 * 1.4) + "g";
+
+        element = document.getElementById("beeNormalPrice");
+        element.textContent = "N/A";
+
+        element = document.getElementById("jarNormalPrice");
+        document.getElementById("jarNormal").innerHTML = `<img src="images/Icon_Pickles.png" alt="Jar" style="width:48px;">`;
+        element.textContent = Math.floor(50 + baseValue * 2) + "g";
+
+        element = document.getElementById("jarArtisanPrice");
+        element.textContent = Math.floor((50 + baseValue * 2) * 1.4) + "g";
+
+        element = document.getElementById("beeArtisanPrice");
+        element.textContent = "N/A";
+
+    } else if (cropType === "Vegetable") {
+        element = document.getElementById("kegNormalPrice");
+        document.getElementById("kegNormal").innerHTML = `<img src="images/Icon_Juice.png" alt="keg" style="width:48px;">`;
+        element.textContent = Math.floor(baseValue * 2.25) + "g";
+
+        element = document.getElementById("kegArtisanPrice");
+        element.textContent = Math.floor(baseValue * 2.25 * 1.4) + "g";
+
+        element = document.getElementById("beeNormalPrice");
+        element.textContent = "N/A";
+
+        element = document.getElementById("jarNormalPrice");
+        document.getElementById("jarNormal").innerHTML = `<img src="images/Icon_Pickles.png" alt="Jar" style="width:48px;">`;
+        element.textContent = Math.floor(50 + baseValue * 2) + "g";
+
+        element = document.getElementById("jarArtisanPrice");
+        element.textContent = Math.floor((50 + baseValue * 2) * 1.4) + "g";
+
+        element = document.getElementById("beeArtisanPrice");
+        element.textContent = "N/A";
+
+    } else if (cropType === "Fruit") {
+        element = document.getElementById("kegNormalPrice");
+        document.getElementById("kegNormal").innerHTML = `<img src="images/Icon_Wine.png" alt="keg" style="width:48px;">`;
+        element.textContent = Math.floor(baseValue * 3) + "g";
+
+        element = document.getElementById("kegArtisanPrice");
+        element.textContent = Math.floor(baseValue * 3 * 1.4) + "g";
+
+        element = document.getElementById("beeNormalPrice");
+        element.textContent = "N/A";
+
+        element = document.getElementById("jarNormalPrice");
+        document.getElementById("jarNormal").innerHTML = `<img src="images/Icon_Jelly.png" alt="Jar" style="width:48px;">`;
+        element.textContent = Math.floor(50 + baseValue * 2) + "g";
+
+        element = document.getElementById("jarArtisanPrice");
+        element.textContent = Math.floor((50 + baseValue * 2) * 1.4) + "g";
+
+        element = document.getElementById("beeArtisanPrice");
+        element.textContent = "N/A";
+
+    } else if (cropType === "Flower") {
+        element = document.getElementById("kegNormalPrice");
+        document.getElementById("kegNormal").innerHTML = `<img src="images/Icon_Mead.png" alt="keg" style="width:48px;">`;
+        element.textContent = Math.floor(300) + "g";
+
+        element = document.getElementById("kegArtisanPrice");
+        element.textContent = Math.floor(300 * 1.4) + "g";
+
+        element = document.getElementById("beeNormalPrice");
+        element.textContent = Math.floor(100 + (baseValue * 2)) + "g";
+
+        element = document.getElementById("jarNormalPrice");
+        element.textContent = "N/A";
+
+        element = document.getElementById("jarArtisanPrice");
+        element.textContent = "N/A";
+
+        element = document.getElementById("beeArtisanPrice");
+        element.textContent = Math.floor((100 + (baseValue * 2)) * 1.4) + "g";
+    }
+}
+
+function farmingLevelChanged() {
+    // do stuff
 }

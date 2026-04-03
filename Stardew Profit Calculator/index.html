@@ -83,5 +83,53 @@
                 <td id="tillerIridium"></td>
             </tr>
         </table>
+
+        <br>
+
+        <table id="artisanPriceTable">
+            <tr>
+                <th>Artisan Goods</th>
+            </tr>
+            <tr>
+                <table id="kegPriceTable">
+                    <tr>
+                        <th></th>
+                        <th id="kegNormal"><img src="images/Icon_Wine.png" alt="keg" style="width:48px;"></th>
+                        <th id="jarNormal"><img src="images/Icon_Jelly.png" alt="Jar" style="width:48px;"></th>
+                        <th id="beeNormal"><img src="images/Icon_Honey.png" alt="Bee House" style="width:48px;"></th>
+                    </tr>
+                    <tr>
+                        <td style="width:48px;"><img src="images/Gold_Coin.png" style="width:24px;height:24px" alt="Normal"></td>
+                        <td id="kegNormalPrice"></td>
+                        <td id="jarNormalPrice"></td>
+                        <td id="beeNormalPrice"></td>
+                    </tr>
+                    <tr>
+                        <td style="width:48px;"><img src="images/Talent_Artisan.png" alt="Artisan"></td>
+                        <td id="kegArtisanPrice"></td>
+                        <td id="jarArtisanPrice"></td>
+                        <td id="beeArtisanPrice"></td>
+                    </tr>
+                </table>
+            </tr>
+        </table>
+
+        <br>
+
+        <label for="farmingLevelNumber">Farming Level:</label>
+        <input type="number" id="farmingLevelNumber" min="0" max="14" value="0">
+
+        <br>
+
+        <label for="fertilizerSelect">Fertilizer:</label>
+        <select id="fertilizerSelect">
+            <option value="none">None</option>
+            <option value="fertilizerBasic">Basic Fertilizer</option>
+            <option value="fertilizerQuality">Quality Fertilizer</option>
+            <option value="fertilizerDeluxe">Deluxe Fertilizer</option>
+            <option value="speedBasic">Speed-Gro</option>
+            <option value="speedDeluxe">Deluxe Speed-Gro</option>
+            <option value="speedHyper">Hyper Speed-Gro</option>
+        </select>
     </body>
 </html>
