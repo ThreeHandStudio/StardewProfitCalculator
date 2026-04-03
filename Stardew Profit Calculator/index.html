@@ -38,6 +38,14 @@
                     </select>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <label for="regrows">Regrows:</label>
+                    <input type="checkbox" id="regrows" disabled>
+                </td>
+
+                <td id="regrowthtime"></td>
+            </tr>
         </table>
 
         <br>
@@ -121,15 +129,53 @@
 
         <br>
 
-        <label for="fertilizerSelect">Fertilizer:</label>
-        <select id="fertilizerSelect">
-            <option value="none">None</option>
-            <option value="fertilizerBasic">Basic Fertilizer</option>
-            <option value="fertilizerQuality">Quality Fertilizer</option>
-            <option value="fertilizerDeluxe">Deluxe Fertilizer</option>
-            <option value="speedBasic">Speed-Gro</option>
-            <option value="speedDeluxe">Deluxe Speed-Gro</option>
-            <option value="speedHyper">Hyper Speed-Gro</option>
-        </select>
+        <table id="profitPerDayTable">
+            <tr>
+                <th>Profit Per Day</th>
+            </tr>
+            <tr>
+                <td></td>
+                <td id="noFertilizer">No Fertilizer</td>
+                <td id="basicFertilizer" style="width:64px;"><img src="images/Fertilizer_Basic.png" alt="Basic Fertilizer" style="width:48px"></td>
+                <td id="qualityFertilizer" style="width:64px;"><img src="images/Fertilizer_Quality.png" alt="Quality Fertilizer" style="width:48px"></td>
+                <td id="deluxeFertilizer" style="width:64px;"><img src="images/Fertilizer_Deluxe.png" alt="Deluxe Fertilizer" style="width:48px"></td>
+                <td id="speedBasic" style="width:64px;"><img src="images/Speed-Gro.png" alt="Speed-Gro" style="width:48px"></td>
+                <td id="speedDeluxe" style="width:64px;"><img src="images/Speed-Gro_Deluxe.png" alt="Deluxe Speed-Gro" style="width:48px"></td>
+                <td id="speedHyper" style="width:64px;"><img src="images/Speed-Gro_Hyper.png" alt="Hyper Speed-Gro" style="width:48px"></td>
+            </tr>
+            <tr>
+                <td id="farmLevelText" style="width: 84px;">Farm Level</td>
+            </tr>
+            <tr>
+                <td><img src="images/Gold_Coin.png" style="width:24px;height:24px" alt="Normal"></td>
+                <td id="noFertilizerProfit"></td>
+                <td id="basicFertilizerProfit"></td>
+                <td id="qualityFertilizerProfit"></td>
+                <td id="deluxeFertilizerProfit"></td>
+                <td id="speedProfit"></td>
+                <td id="speedDeluxeProfit"></td>
+                <td id="speedHyperProfit"></td>
+            </tr>
+            <tr>
+                <td><img src="images/Talent_Tiller.png" style="width:24px;height:24px" alt="Tiller"></td>
+                <td id="noFertilizerTillerProfit"></td>
+                <td id="basicFertilizerTillerProfit"></td>
+                <td id="qualityFertilizerTillerProfit"></td>
+                <td id="deluxeFertilizerTillerProfit"></td>
+                <td id="speedTillerProfit"></td>
+                <td id="speedDeluxeTillerProfit"></td>
+                <td id="speedHyperTillerProfit"></td>
+            </tr>
+            <tr>
+                <td><img src="images/Talent_Agriculturist.png" style="width:24px;height:24px" alt="Agriculturist"></td>
+                <td id="noFertilizerAgriculturistProfit"></td>
+                <td id="basicFertilizerAgriculturistProfit"></td>
+                <td id="qualityFertilizerAgriculturistProfit"></td>
+                <td id="deluxeFertilizerAgriculturistProfit"></td>
+                <td id="speedAgriculturistProfit"></td>
+                <td id="speedDeluxeAgriculturistProfit"></td>
+                <td id="speedHyperAgriculturistProfit"></td>
+            </tr>
+        </table>
     </body>
 </html>

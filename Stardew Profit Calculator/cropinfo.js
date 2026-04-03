@@ -135,6 +135,7 @@ function initializer() {
     }
 
     seasonSelectChanged(); 
+    farmingLevelChanged();
 
     seasonSelect.addEventListener("change", function() {
         seasonSelectChanged();
@@ -145,7 +146,7 @@ function initializer() {
         cropSelectChanged();
     });
 
-    let farmingLevel = document.getElementById("farmingLevel");
+    let farmingLevel = document.getElementById("farmingLevelNumber");
     farmingLevel.addEventListener("change", function() {
         farmingLevelChanged();
     });
@@ -247,6 +248,14 @@ function cropSelectChanged() {
         cropName = "SweetGem";
     }
 
+    if (regrowthTime > 0) {
+        document.getElementById("regrows").checked = true;
+        document.getElementById("regrowthtime").textContent = regrowthTime + " days";
+    } else {
+        document.getElementById("regrows").checked = false;
+        document.getElementById("regrowthtime").textContent = "";
+    }
+
     element = document.getElementById("seedImage");
     element.innerHTML = `<img src="images/Seed_${cropName}.png" alt="${cropName} Seed">`;
 
@@ -305,6 +314,7 @@ function cropSelectChanged() {
     element.textContent = Math.floor(baseValue * 1.1 * 2) + "g";
 
     artisanPriceUpdate();
+    farmingLevelChanged();
 }
 
 function artisanPriceUpdate() {
@@ -399,6 +409,7 @@ function artisanPriceUpdate() {
 
         element = document.getElementById("beeArtisanPrice");
         element.textContent = "N/A";
+
     } else if (crop === "Hops") {
         element = document.getElementById("kegNormalPrice");
         document.getElementById("kegNormal").innerHTML = `<img src="images/Icon_Pale_Ale.png" alt="keg" style="width:48px;">`;
@@ -485,5 +496,308 @@ function artisanPriceUpdate() {
 }
 
 function farmingLevelChanged() {
-    // do stuff
+    let element = document.getElementById("farmingLevelNumber");
+    let level = parseInt(element.value);
+    let calculation;
+    let days;
+
+    let selectedSeason = document.getElementById("seasonSelect").value;
+    let croplist = [];
+
+    if (selectedSeason === "spring") {
+        croplist = springCrops;
+    } else if (selectedSeason === "summer") {
+        croplist = summerCrops;
+    } else if (selectedSeason === "fall") {
+        croplist = fallCrops;
+    } else if (selectedSeason === "winter") {
+        croplist = winterCrops;
+    } else if (selectedSeason === "special") {
+        croplist = specialCrops;
+    }
+
+    let selectedCropName = document.getElementById("cropSelect").value;
+    let selectedCrop = null;
+
+    for (var i = 0; i < croplist.length; i++) {
+        if (croplist[i][0] === selectedCropName) {
+            selectedCrop = croplist[i];
+            break;
+        }
+    }
+
+    let cropName = selectedCrop[0];
+    let cropType = selectedCrop[1];
+    let baseValue = selectedCrop[2];
+    let growthTime = selectedCrop[3];
+    let regrowthTime = selectedCrop[4];
+    let speedTime = selectedCrop[5];
+    let deluxeSpeedTime = selectedCrop[6];
+    let hyperSpeedTime = selectedCrop[7];
+    let speedAgTime = selectedCrop[8];
+    let deluxeSpeedAgTime = selectedCrop[9];
+    let hyperSpeedAgTime = selectedCrop[10];    
+    let pierreCost = selectedCrop[11];
+    let jojaCost = selectedCrop[12];
+    let sandyCost = selectedCrop[13];
+
+    if (cropName === "Blue Jazz") {
+        cropName = "Jazz";
+    } else if (cropName === "Green Bean") {
+        cropName = "Bean";
+    } else if (cropName === "Ancient Fruit") {
+        cropName = "Ancient";
+    } else if (cropName === "Coffee Bean") {
+        cropName = "Coffee";
+    } else if (cropName === "Hot Pepper") {
+        cropName = "Pepper";
+    } else if (cropName === "Red Cabbage") {
+        cropName = "Cabbage";
+    } else if (cropName === "Summer Spangle") {
+        cropName = "Spangle";
+    } else if (cropName === "Summer Squash") {
+        cropName = "Squash";
+    } else if (cropName === "Bok Choy") {
+        cropName = "BokChoy";
+    } else if (cropName === "Fairy Rose") {
+        cropName = "FairyRose";
+    } else if (cropName === "Cactus Fruit") {
+        cropName = "Cactus";
+    } else if (cropName === "Taro Root") {
+        cropName = "Taro";
+    } else if (cropName === "Sweet Gem Berry") {
+        cropName = "SweetGem";
+    }
+
+    document.getElementById("farmLevelText").textContent = "Farm Level " + level;
+
+    let noFertilizerChance = noFertilizer[level];
+    let basicFertilizerChance = basicFertilizer[level];
+    let qualityFertilizerChance = qualityFertilizer[level];
+    let deluxeFertilizerChance = deluxeFertilizer[level];
+
+    if (regrowthTime === 0) {
+        element = document.getElementById("noFertilizerProfit");
+        calculation = ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3])) / growthTime;
+        element.textContent = calculation.toFixed(2) + "g";
+        document.getElementById("noFertilizerTillerProfit").textContent = (calculation * 1.1).toFixed(2) + "g"; 
+
+        element = document.getElementById("basicFertilizerProfit");
+        calculation = ((baseValue * basicFertilizerChance[0]) + (baseValue * 1.25 * basicFertilizerChance[1]) + (baseValue * 1.5 * basicFertilizerChance[2]) + (baseValue * 2 * basicFertilizerChance[3])) / growthTime;
+        element.textContent = calculation.toFixed(2) + "g";
+        document.getElementById("basicFertilizerTillerProfit").textContent = (calculation * 1.1).toFixed(2) + "g";
+
+
+        element = document.getElementById("qualityFertilizerProfit");
+        calculation = ((baseValue * qualityFertilizerChance[0]) + (baseValue * 1.25 * qualityFertilizerChance[1]) + (baseValue * 1.5 * qualityFertilizerChance[2]) + (baseValue * 2 * qualityFertilizerChance[3])) / growthTime;
+        element.textContent = calculation.toFixed(2) + "g";
+        document.getElementById("qualityFertilizerTillerProfit").textContent = (calculation * 1.1).toFixed(2) + "g";
+
+        element = document.getElementById("deluxeFertilizerProfit");
+        calculation = ((baseValue * deluxeFertilizerChance[0]) + (baseValue * 1.25 * deluxeFertilizerChance[1]) + (baseValue * 1.5 * deluxeFertilizerChance[2]) + (baseValue * 2 * deluxeFertilizerChance[3])) / growthTime;
+        element.textContent = calculation.toFixed(2) + "g";
+        document.getElementById("deluxeFertilizerTillerProfit").textContent = (calculation * 1.1).toFixed(2) + "g";
+
+        element = document.getElementById("speedProfit");
+        calculation = ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3])) / speedTime;
+        element.textContent = calculation.toFixed(2) + "g";
+        document.getElementById("speedTillerProfit").textContent = (calculation * 1.1).toFixed(2) + "g";
+
+        element = document.getElementById("speedDeluxeProfit");
+        calculation = ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3])) / deluxeSpeedTime;
+        element.textContent = calculation.toFixed(2) + "g";
+        document.getElementById("speedDeluxeTillerProfit").textContent = (calculation * 1.1).toFixed(2) + "g";
+
+        element = document.getElementById("speedHyperProfit");
+        calculation = ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3])) / hyperSpeedTime;
+        element.textContent = calculation.toFixed(2) + "g";
+        document.getElementById("speedHyperTillerProfit").textContent = (calculation * 1.1).toFixed(2) + "g";
+
+        element = document.getElementById("noFertilizerAgriculturistProfit");
+        calculation = ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3])) / speedTime;
+        element.textContent = (calculation * 1.1).toFixed(2) + "g";
+
+        element = document.getElementById("basicFertilizerAgriculturistProfit");
+        calculation = ((baseValue * basicFertilizerChance[0]) + (baseValue * 1.25 * basicFertilizerChance[1]) + (baseValue * 1.5 * basicFertilizerChance[2]) + (baseValue * 2 * basicFertilizerChance[3])) / speedTime;
+        element.textContent = (calculation * 1.1).toFixed(2) + "g";
+
+        element = document.getElementById("qualityFertilizerAgriculturistProfit");
+        calculation = ((baseValue * qualityFertilizerChance[0]) + (baseValue * 1.25 * qualityFertilizerChance[1]) + (baseValue * 1.5 * qualityFertilizerChance[2]) + (baseValue * 2 * qualityFertilizerChance[3])) / speedTime;
+        element.textContent = (calculation * 1.1).toFixed(2) + "g";
+
+        element = document.getElementById("deluxeFertilizerAgriculturistProfit");
+        calculation = ((baseValue * deluxeFertilizerChance[0]) + (baseValue * 1.25 * deluxeFertilizerChance[1]) + (baseValue * 1.5 * deluxeFertilizerChance[2]) + (baseValue * 2 * deluxeFertilizerChance[3])) / speedTime;
+        element.textContent = (calculation * 1.1).toFixed(2) + "g";
+
+        element = document.getElementById("speedAgriculturistProfit");
+        calculation = ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3])) / speedAgTime;
+        element.textContent = (calculation * 1.1).toFixed(2) + "g";
+        
+        element = document.getElementById("speedDeluxeAgriculturistProfit");
+        calculation = ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3])) / deluxeSpeedAgTime;
+        element.textContent = (calculation * 1.1).toFixed(2) + "g";
+
+        element = document.getElementById("speedHyperAgriculturistProfit");
+        calculation = ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3])) / hyperSpeedAgTime;
+        element.textContent = (calculation * 1.1).toFixed(2) + "g";
+    } else {
+        let daymax = 28;
+
+        if (selectedCrop[0] === "Ancient Fruit") {
+                daymax = 84;
+        } else if (selectedCrop[0] === "Coffee Bean") {
+                daymax = 56;
+        } else if (selectedCrop[0] === "Cactus Fruit") {
+                 daymax = 112;
+        } else if (selectedCrop[0] === "Corn") {
+                 daymax = 56;
+        }
+
+        element = document.getElementById("noFertilizerProfit");
+        days = growthTime + regrowthTime;
+        calculation = ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3]));
+
+        while (days < daymax) {
+            calculation += ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3]));
+            days += regrowthTime;
+        }
+        element.textContent = (calculation / daymax).toFixed(2) + "g";
+        document.getElementById("noFertilizerTillerProfit").textContent = (calculation * 1.1 / daymax).toFixed(2) + "g";
+
+        element = document.getElementById("basicFertilizerProfit");
+        days = growthTime + regrowthTime;
+        calculation = ((baseValue * basicFertilizerChance[0]) + (baseValue * 1.25 * basicFertilizerChance[1]) + (baseValue * 1.5 * basicFertilizerChance[2]) + (baseValue * 2 * basicFertilizerChance[3]));
+
+        while (days < daymax) {
+            calculation += ((baseValue * basicFertilizerChance[0]) + (baseValue * 1.25 * basicFertilizerChance[1]) + (baseValue * 1.5 * basicFertilizerChance[2]) + (baseValue * 2 * basicFertilizerChance[3]));
+            days += regrowthTime;
+        }
+        element.textContent = (calculation / daymax).toFixed(2) + "g";
+        document.getElementById("basicFertilizerTillerProfit").textContent = (calculation * 1.1 / daymax).toFixed(2) + "g";
+
+        element = document.getElementById("qualityFertilizerProfit");
+        days = growthTime + regrowthTime;
+        calculation = ((baseValue * qualityFertilizerChance[0]) + (baseValue * 1.25 * qualityFertilizerChance[1]) + (baseValue * 1.5 * qualityFertilizerChance[2]) + (baseValue * 2 * qualityFertilizerChance[3]));
+
+        while (days < daymax) {
+            calculation += ((baseValue * qualityFertilizerChance[0]) + (baseValue * 1.25 * qualityFertilizerChance[1]) + (baseValue * 1.5 * qualityFertilizerChance[2]) + (baseValue * 2 * qualityFertilizerChance[3]));
+            days += regrowthTime;
+        }
+        element.textContent = (calculation / daymax).toFixed(2) + "g";
+        document.getElementById("qualityFertilizerTillerProfit").textContent = (calculation * 1.1 / daymax).toFixed(2) + "g";
+
+        element = document.getElementById("deluxeFertilizerProfit");
+        days = growthTime + regrowthTime;
+        calculation = ((baseValue * deluxeFertilizerChance[0]) + (baseValue * 1.25 * deluxeFertilizerChance[1]) + (baseValue * 1.5 * deluxeFertilizerChance[2]) + (baseValue * 2 * deluxeFertilizerChance[3]));
+
+        while (days < daymax) {
+            calculation += ((baseValue * deluxeFertilizerChance[0]) + (baseValue * 1.25 * deluxeFertilizerChance[1]) + (baseValue * 1.5 * deluxeFertilizerChance[2]) + (baseValue * 2 * deluxeFertilizerChance[3]));
+            days += regrowthTime;
+        }
+        element.textContent = (calculation / daymax).toFixed(2) + "g";
+        document.getElementById("deluxeFertilizerTillerProfit").textContent = (calculation * 1.1 / daymax).toFixed(2) + "g";
+
+        element = document.getElementById("speedProfit");
+        days = speedTime + regrowthTime;
+        calculation = ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3]));
+
+        while (days < daymax) {
+            calculation += ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3]));
+            days += regrowthTime;
+        }
+        element.textContent = (calculation / daymax).toFixed(2) + "g";
+        document.getElementById("speedTillerProfit").textContent = (calculation * 1.1 / daymax).toFixed(2) + "g";
+
+        element = document.getElementById("speedDeluxeProfit");
+        days = deluxeSpeedTime + regrowthTime;
+        calculation = ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3]));
+
+        while (days < daymax) {
+            calculation += ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3]));
+            days += regrowthTime;
+        }
+        element.textContent = (calculation / daymax).toFixed(2) + "g";
+        document.getElementById("speedDeluxeTillerProfit").textContent = (calculation * 1.1 / daymax).toFixed(2) + "g";
+
+        element = document.getElementById("speedHyperProfit");
+        days = hyperSpeedTime + regrowthTime;
+        calculation = ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3]));
+
+        while (days < daymax) {
+            calculation += ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3]));
+            days += regrowthTime;
+        }
+        element.textContent = (calculation / daymax).toFixed(2) + "g";
+        document.getElementById("speedHyperTillerProfit").textContent = (calculation * 1.1 / daymax).toFixed(2) + "g";
+        
+        element = document.getElementById("noFertilizerAgriculturistProfit");
+        days = speedTime + regrowthTime;
+        calculation = ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3]));
+
+        while (days < daymax) {
+            calculation += ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3]));
+            days += regrowthTime;
+        }
+        element.textContent = (calculation * 1.1 / daymax).toFixed(2) + "g";
+
+        element = document.getElementById("basicFertilizerAgriculturistProfit");
+        days = speedTime + regrowthTime;
+        calculation = ((baseValue * basicFertilizerChance[0]) + (baseValue * 1.25 * basicFertilizerChance[1]) + (baseValue * 1.5 * basicFertilizerChance[2]) + (baseValue * 2 * basicFertilizerChance[3]));
+
+        while (days < daymax) {
+            calculation += ((baseValue * basicFertilizerChance[0]) + (baseValue * 1.25 * basicFertilizerChance[1]) + (baseValue * 1.5 * basicFertilizerChance[2]) + (baseValue * 2 * basicFertilizerChance[3]));
+            days += regrowthTime;
+        }
+        element.textContent = (calculation * 1.1 / daymax).toFixed(2) + "g";
+
+        element = document.getElementById("qualityFertilizerAgriculturistProfit");
+        days = speedTime + regrowthTime;
+        calculation = ((baseValue * qualityFertilizerChance[0]) + (baseValue * 1.25 * qualityFertilizerChance[1]) + (baseValue * 1.5 * qualityFertilizerChance[2]) + (baseValue * 2 * qualityFertilizerChance[3]));
+
+        while (days < daymax) {
+            calculation += ((baseValue * qualityFertilizerChance[0]) + (baseValue * 1.25 * qualityFertilizerChance[1]) + (baseValue * 1.5 * qualityFertilizerChance[2]) + (baseValue * 2 * qualityFertilizerChance[3]));
+            days += regrowthTime;
+        }
+        element.textContent = (calculation * 1.1 / daymax).toFixed(2) + "g";
+
+        element = document.getElementById("deluxeFertilizerAgriculturistProfit");
+        days = speedTime + regrowthTime;
+        calculation = ((baseValue * deluxeFertilizerChance[0]) + (baseValue * 1.25 * deluxeFertilizerChance[1]) + (baseValue * 1.5 * deluxeFertilizerChance[2]) + (baseValue * 2 * deluxeFertilizerChance[3]));
+
+        while (days < daymax) {
+            calculation += ((baseValue * deluxeFertilizerChance[0]) + (baseValue * 1.25 * deluxeFertilizerChance[1]) + (baseValue * 1.5 * deluxeFertilizerChance[2]) + (baseValue * 2 * deluxeFertilizerChance[3]));
+            days += regrowthTime;
+        }
+        element.textContent = (calculation * 1.1 / daymax).toFixed(2) + "g";
+
+        element = document.getElementById("speedAgriculturistProfit");
+        days = speedAgTime + regrowthTime;
+        calculation = ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3]));
+
+        while (days < daymax) {
+            calculation += ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3]));
+            days += regrowthTime;
+        }
+        element.textContent = (calculation * 1.1 / daymax).toFixed(2) + "g";
+        
+        element = document.getElementById("speedDeluxeAgriculturistProfit");
+        days = deluxeSpeedAgTime + regrowthTime;
+        calculation = ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3]));
+
+        while (days < daymax) {
+            calculation += ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3]));
+            days += regrowthTime;
+        }
+        element.textContent = (calculation * 1.1 / daymax).toFixed(2) + "g";
+
+        element = document.getElementById("speedHyperAgriculturistProfit");
+        days = hyperSpeedAgTime + regrowthTime;
+        calculation = ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3]));
+
+        while (days < daymax) {
+            calculation += ((baseValue * noFertilizerChance[0]) + (baseValue * 1.25 * noFertilizerChance[1]) + (baseValue * 1.5 * noFertilizerChance[2]) + (baseValue * 2 * noFertilizerChance[3]));
+            days += regrowthTime;
+        }
+        element.textContent = (calculation * 1.1 / daymax).toFixed(2) + "g";
+    }
 }
